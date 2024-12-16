@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio Website</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            overflow-x: hidden;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+        .about p{
+            font-size: large;
+        }
+        header {
+            display: flex;
+            height: auto;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 10%;
+            background-color: #4285f4;
+            color: white;
+        }
+
+        header h1 {
+            font-size: 24px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+            font-weight: 400;
+        }
+
+        nav a:hover {
+            color: #ffab40;
+        }
+        
+        .hero {
+            height:60vh;
+            background-color: #29294d;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            
+        }
+
+        .hero h2 {
+            font-size: 40px;
+            margin-bottom: 10px;
+            animation: fadeInDown 2s;
+        }
+
+        .hero p {
+            font-size: 24px;
+            color: #4285f4;
+            animation: fadeInUp 2s;
+        }
+
+        .typing-effect {
+            display: inline;
+            border-right: 2px solid rgb(175, 2, 2);
+            color:#ffab40;
+            animation: typing 3s steps(30, end), blink 0.6s step-end infinite;
+        }
+
+
+    
+    .popup {
+        position: fixed;
+        top:100px;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: #4285f4;
+        color: white;
+        padding: 15px 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        font-family: 'Poppins', sans-serif;
+        font-size: 16px;
+        opacity: 0;
+        transition: opacity 0.5s ease-in-out;
+        z-index: 1000;
+    }
+
+    .project-slideshow {
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    background-color:  #4285f4;;
+    border-radius: 80px;
+    color:#ffab40
+
+}
+
+.project-slide {
+    display: none;
+    flex: 0 0 100%;
+    justify-content: center;
+    text-align: center;
+    transition: transform 0.5s ease-in-out;
+}
+
+.project-slide.active {
+    display: flex;
+}
+
+.nav-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    font-size: 24px;
+    font-weight: bold;
+    color: #4285f4;
+    cursor: pointer;
+    z-index: 10;
+    padding: 10px;
+}
+
+.nav-btn:hover {
+    color: #ff6a00;
+}
+
+.nav-btn.left {
+    left: 10px;
+}
+
+.nav-btn.right {
+    right: 10px;
+}
+
+
+
+
+
+
+
+
+    .popup.visible {
+        opacity: 1;
+    }
+
+    .popup.hidden {
+        opacity: 0;
+    }
+        .contact h2{
+            color: #f1f3f4;
+        }
+
+
+
+        @keyframes typing {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+
+        @keyframes blink {
+            from, to { border-color: transparent; }
+            50% { border-color: white; }
+        }
+
+        section {
+            padding: 50px 10%;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #4285f4;
+        }
+
+        .timeline {
+            position: relative;
+            margin-top: 50px;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            width: 4px;
+            background: #4285f4;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            height: 100%;
+        }
+
+        .timeline-item {
+            margin: 20px 0;
+            position: relative;
+            width: calc(50% - 40px);
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+
+        .timeline-item.left {
+            left: -1%;
+            animation: slideLeft 0.8s ease;
+        }
+
+        .timeline-item.right {
+            left:51%;
+            animation: slideRight 0.8s ease;
+        }
+
+        .timeline-item:hover {
+            transform: scale(1.05);
+        }
+
+        .timeline-item h3 {
+            margin-bottom: 10px;
+        }
+
+        .technologies {
+            background-color: #f1f3f4;
+        }
+
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+        }
+
+        .tech-item {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .tech-item img {
+            width: 50px;
+            margin-bottom: 10px;
+        }
+
+        .projects .project-item {
+            margin-bottom: 20px;
+        }
+
+        .achievements .achievement-item {
+            margin-bottom: 20px;
+        }
+
+        .contact {
+            background-color: #4285f4;
+            color: white;
+            text-align: center;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #29294d;
+            color: white;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            nav a {
+                margin: 10px 0;
+            }
+
+            .timeline-item {
+                width: 90%;
+                left: 0 !important;
+                margin-left: 5%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h2 {
+                font-size: 28px;
+            }
+
+            .hero p {
+                font-size: 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+<header>
+    <h1>My Portfolio</h1>
+    <nav>
+        <a href="#about">About</a>
+        <a href="#timeline">Timeline</a>
+        <a href="#technologies">Technologies</a>
+        <a href="#projects">Projects</a>
+        <a href="#achievements">Achievements</a>
+        <a href="#contact">Contact</a>
+    </nav>
+</header>
+
+<section class="hero">
+    <h2>Hi! I'm Varanasi L V S S S Sathveek</h2>
+    <p>I'm <span class="typing-effect"></span></p>
+</section>
+
+
+<section id="about">
+    <h2>About Me</h2>
+    <p>Hello! I'm Varanasi L V S S S Sathveek, a tech enthusiast and aspiring software developer passionate about building innovative solutions that make a difference. Currently pursuing B.Tech in Computer Science at NIT Andhra Pradesh, I specialize in blending creativity and technology to solve real-world problems.
+
+        With a curious mind and a drive for excellence, I enjoy exploring emerging technologies, enhancing user experiences through web development, and crafting efficient code. My journey so far has been defined by a commitment to continuous learning and a desire to contribute meaningfully to the tech ecosystem.</p>
+    
+
+</section>
+
+<div id="popup" class="popup hidden">
+    Thanks for visiting my portfolio!
+</div>
+
+
+<section id="timeline">
+    <h2>MileStones</h2>
+    <div class="timeline">
+        <div class="timeline-item left" >
+            <h3>10th Class</h3>
+            <p>Scored 10 GPA out of 10.</p>
+        </div>
+        <div class="timeline-item right">
+            <h3>Intermediate</h3>
+            <p>Studied MPC at Bhashyam College and achieved 971/1000 marks.</p>
+        </div>
+        <div class="timeline-item left">
+            <h3>JEE Achievement</h3>
+            <p>Secured 98.7 percentile in JEE exam.</p>
+        </div>
+        <div class="timeline-item right">
+            <h3>BTech</h3>
+            <p>Currently pursuing BTech at National Institute of Technology, Andhra Pradesh (CGPA: 8.79).</p>
+        </div>
+    </div>
+</section>
+
+<section id="technologies">
+    <h2>Technologies & Frameworks</h2>
+    <div class="tech-grid">
+        <div class="tech-item">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" alt="HTML">
+            <p>HTML</p>
+        </div>
+        <div class="tech-item">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" alt="CSS">
+            <p>CSS</p>
+        </div>
+        <div class="tech-item">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" alt="JavaScript">
+            <p>JavaScript</p>
+        </div>
+        <div class="tech-item">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/c/c-original.svg" alt="C">
+            <p>C</p>
+        </div>
+        <div class="tech-item">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/1/18/ISO_C%2B%2B_Logo.svg"alt="C++">
+            <p>C++</p>
+        </div>
+        <div class="tech-item">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python">
+            <p>Python</p>
+        </div>
+    </div>
+</section>
+
+<section id="projects">
+    <h2>Projects</h2>
+    <div class="project-slideshow">
+        <button class="nav-btn left" onclick="changeSlide(-1)">&#10094;</button>
+        <div class="project-slide">
+            <div class="project-card" onclick="openProject('AttendanceApp')">
+                <h3>Attendance App</h3>
+                <p>An app which helps to take attendance seamlessly </p>
+                <p style="color:#f9f9f9;">(Click to view)</p>
+                
+            </div>
+        </div>
+        <div class="project-slide">
+            <div class="project-card" onclick="openProject('LaundryWebsite')">
+                <h3>Laundry Website</h3>
+                <p>A website that is intended to book Laundry services online.</p>
+                <p>(In Development)</p>
+                <p style="color:#f9f9f9;">(Click to view)</p>
+            </div>
+        </div>
+        <div class="project-slide">
+            <div class="project-card" onclick="openProject('AppAggregator')">
+                <h3>Website Aggregator</h3>
+                <p>A simple and efficient website that is made to act like a playstore for Websites.</p>
+                <p>Helps to easily navigate to desired categories of Wesite easily</p>
+                <p style="color:#f9f9f9;">(Click to view)</p>
+            </div>
+        </div>
+        <button class="nav-btn right" onclick="changeSlide(1)">&#10095;</button>
+    </div>
+</section>
+
+
+
+
+<section id="achievements">
+    <h2>Achievements</h2>
+    <div class="achievement-item">
+        <h3>Dean's Recognition</h3>
+        <p>Received a momento for meritorious ideas from the Dean of Research and Development at NIT Andhra Pradesh.</p>
+    </div>
+    <div class="achievement-item">
+        <h3>Smart India Hackathon</h3>
+        <p>Selected at college level for participation in the Smart India Hackathon.</p>
+    </div>
+    <div class="achievement-item">
+        <h3>Codefest Winner</h3>
+        <p>Won 1st prize in a national-level coding competition.</p>
+    </div>
+</section>
+
+<section id="contact" class="contact">
+    <h2>Contact Me</h2>
+    <p>If you'd like to work together or have any questions, feel free to reach out!</p>
+    <p>Email: <a href="mailto:sathveek@gmail.com" style="color: #ffab40;">sathveekvaranasi@gmail.com</a></p>
+    <div>
+        <a href="https://github.com/VSathveek" target="_blank" style="color: white; text-decoration: none; margin: 0 10px;">GitHub</a>
+        <a href="hwww.linkedin.com/in/vsathveek" target="_blank" style="color: white; text-decoration: none; margin: 0 10px;">LinkedIn</a>
+    </div>
+</section>
+
+<footer>
+    <p>&copy; 2024 Varanasi L V S S S Sathveek. All rights reserved.</p>
+</footer>
+</body>
+<script>
+
+
+    const words = ["a Developer", "a Designer", "an Engineer", "a Problem Solver"];
+    let wordIndex = 0;
+    let charIndex = 0;
+    const typingSpeed = 100; // Typing speed in milliseconds
+    const erasingSpeed = 50; // Erasing speed in milliseconds
+    const delayBetweenWords = 1500; // Delay between words in milliseconds
+    const typingElement = document.querySelector(".typing-effect");
+
+    function typeWord() {
+        if (charIndex < words[wordIndex].length) {
+            typingElement.textContent += words[wordIndex].charAt(charIndex);
+            charIndex++;
+            setTimeout(typeWord, typingSpeed);
+        } else {
+            setTimeout(eraseWord, delayBetweenWords);
+        }
+    }
+
+    function eraseWord() {
+        if (charIndex > 0) {
+            typingElement.textContent = words[wordIndex].substring(0, charIndex - 1);
+            charIndex--;
+            setTimeout(eraseWord, erasingSpeed);
+        } else {
+            wordIndex = (wordIndex + 1) % words.length; // Move to the next word
+            setTimeout(typeWord, typingSpeed);
+        }
+    }
+
+    // Start the typing effect
+    document.addEventListener("DOMContentLoaded", () => {
+        typeWord();
+    });
+
+
+    function showPopup() {
+        const popup = document.getElementById("popup");
+        popup.classList.remove("hidden");
+        popup.classList.add("visible");
+
+        // Hide the popup after 3 seconds
+        setTimeout(() => {
+            popup.classList.remove("visible");
+            popup.classList.add("hidden");
+        }, 3000); // 3000ms = 3 seconds
+    }
+
+    // Show the popup when the page loads
+    window.addEventListener("load", showPopup);
+
+
+
+    let currentSlide = 0;
+const slides = document.querySelectorAll('.project-slide');
+const autoPlayInterval = 3000; // Time in milliseconds (e.g., 3000ms = 3 seconds)
+
+// Function to show the current slide
+function showSlide(index) {
+    slides.forEach((slide, i) => {
+        slide.classList.remove('active');
+        if (i === index) {
+            slide.classList.add('active');
+        }
+    });
+}
+
+// Function to change the slide
+function changeSlide(direction) {
+    currentSlide = (currentSlide + direction + slides.length) % slides.length;
+    showSlide(currentSlide);
+}
+
+// Autoplay: Automatically change slides
+function startAutoPlay() {
+    setInterval(() => {
+        changeSlide(1); // Move to the next slide
+    },4000);
+}
+
+// Function to open project links
+function openProject(projectName) {
+    const projectLinks = {
+        AttendanceApp: "https://github.com/VSathveek/Attendance-App", 
+        LaundryWebsite: "https://github.com/VSathveek/Wash-Website-",
+        AppAggregator: "https://github.com/VSathveek/Website-Aggregator",
+    };
+    if (projectLinks[projectName]) {
+        window.open(projectLinks[projectName], "_blank");
+    } else {
+        alert("Project link not available.");
+    }
+}
+
+// Initialize the first slide and start autoplay
+showSlide(currentSlide);
+startAutoPlay();
+
+</script>
+</html>
+
