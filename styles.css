@@ -342,14 +342,28 @@ body {
   box-shadow: 0 0 10px 2px rgba(255, 255, 255, 0.4);
 }
 
+@keyframes meteor {
+  0% {
+    transform: rotate(215deg) translateX(0);
+    opacity: 1;
+  }
+  70% {
+    opacity: 1;
+  }
+  100% {
+    transform: rotate(215deg) translateX(-500px);
+    opacity: 0;
+  }
+}
+
 .meteor {
   position: absolute;
   background: linear-gradient(to right, white, white, transparent);
   border-radius: 9999px;
   box-shadow: 0 0 10px 5px rgba(255, 255, 255, 0.3);
-  transform-origin: left center; /* Add this line */
+  transform-origin: left center;
+  animation: meteor 5s linear infinite;
 }
-
 /* Hero Section */
 .hero-section {
   position: relative;
