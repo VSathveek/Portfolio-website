@@ -48,6 +48,21 @@ export async function renameEntry(formData: FormData) {
   revalidatePath("/journal");
 }
 
+/**
+ * Persist an entry's Excalidraw scene (jsonb). Called by the editor's
+ * debounced autosave and manual save. RLS ensures only the owner can write.
+ * No revalidate here — autosave runs often and the list is force-dynamic.
+ */
+export async function updateScene(id: string, scene: unknown) {
+  if (!id) return { ok: false as const };
+
+  const { supabase } = await requireUser();
+  const { error } = await supabase.from("journal_entries").update({ scene }).eq("id", id);
+
+  if (error) throw new Error(`Could not save entry: ${error.message}`);
+  return { ok: true as const };
+}
+
 /** Delete an entry the current user owns (RLS enforces ownership). */
 export async function deleteEntry(formData: FormData) {
   const id = String(formData.get("id") ?? "");

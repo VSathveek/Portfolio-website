@@ -4,6 +4,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
+import { FooterGate } from "@/components/footer-gate";
 import { site } from "@/lib/site";
 
 // Clean sans for body, refined serif for headings — a scholarly pairing.
@@ -58,7 +59,9 @@ export default function RootLayout({
           <main id="main" className="flex-1">
             {children}
           </main>
-          <SiteFooter />
+          <FooterGate>
+            <SiteFooter />
+          </FooterGate>
         </ThemeProvider>
       </body>
     </html>

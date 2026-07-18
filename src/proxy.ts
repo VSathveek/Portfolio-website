@@ -1,7 +1,9 @@
 import { type NextRequest } from "next/server";
 import { updateSession } from "@/utils/supabase/middleware";
 
-export async function middleware(request: NextRequest) {
+// Next.js 16 "proxy" convention (formerly middleware): runs on matched
+// requests to refresh the Supabase session and gate the private journal.
+export async function proxy(request: NextRequest) {
   return await updateSession(request);
 }
 
