@@ -82,48 +82,51 @@ document.addEventListener('DOMContentLoaded', function() {
       starBackground.appendChild(star);
     }
     
-    // Generate meteors
-// Generate meteors with proper angle
+
 for (let i = 0; i < 4; i++) {
-  const meteor = document.createElement('div');
-  meteor.className = 'meteor animate-meteor';
-  meteor.style.width = `${(Math.random() * 2 + 1) * 50}px`;
-  meteor.style.height = `${(Math.random() * 2 + 1) * 2}px`;
-  meteor.style.left = `${Math.random() * 100}%`;
-  meteor.style.top = `${Math.random() * 20}%`;
-  meteor.style.transform = 'rotate(215deg)'; // Add this line
-  meteor.style.animationDelay = `${Math.random() * 15}s`;
-  meteor.style.animationDuration = `${Math.random() * 3 + 3}s`;
-  starBackground.appendChild(meteor);
-}
+    const meteor = document.createElement('div');
+    meteor.className = 'meteor animate-meteor';
+    meteor.style.width = `${(Math.random() * 2 + 1) * 50}px`;
+    meteor.style.height = `${(Math.random() * 2 + 1) * 2}px`;
+    meteor.style.left = `${Math.random() * 100}%`;
+    meteor.style.top = `${Math.random() * 20}%`;
+    meteor.style.transform = 'rotate(215deg)';
+    meteor.style.animationDelay = `${Math.random() * 15}s`;
+    meteor.style.animationDuration = `${Math.random() * 3 + 3}s`;
+    
+    starBackground.appendChild(meteor);
+    
+
+    void meteor.offsetWidth; 
+  }
   }
   
   generateStars();
   window.addEventListener('resize', generateStars);
 
-  // Skills Filter
+
   const skillCategories = document.querySelectorAll('.skill-category');
   const skillsGrid = document.querySelector('.skills-grid');
   
   const skills = [
-    // Languages
+
     { name: "Dart", category: "languages", icon: "https://raw.githubusercontent.com/devicons/devicon/master/icons/dart/dart-original.svg" },
     { name: "Python", category: "languages", icon: "https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg" },
     { name: "Java", category: "languages", icon: "https://raw.githubusercontent.com/devicons/devicon/master/icons/java/java-original.svg" },
     { name: "C++", category: "languages", icon: "https://raw.githubusercontent.com/devicons/devicon/master/icons/cplusplus/cplusplus-original.svg" },
     { name: "JavaScript", category: "languages", icon: "https://raw.githubusercontent.com/devicons/devicon/master/icons/javascript/javascript-original.svg" },
-    // Frameworks
+ 
     { name: "Flutter", category: "frameworks", icon: "https://raw.githubusercontent.com/devicons/devicon/master/icons/flutter/flutter-original.svg" },
     { name: "Django", category: "frameworks", icon: "https://raw.githubusercontent.com/devicons/devicon/master/icons/django/django-plain.svg" },
     { name: "Firebase", category: "frameworks", icon: "https://raw.githubusercontent.com/devicons/devicon/master/icons/firebase/firebase-plain.svg" },
-    // CS Fundamentals
+
     { name: "Data Structures", category: "fundamentals", icon: "https://cdn-icons-png.flaticon.com/512/2103/2103633.png" },
     { name: "Algorithms", category: "fundamentals", icon: "https://cdn-icons-png.flaticon.com/512/2103/2103657.png" },
     { name: "DBMS", category: "fundamentals", icon: "https://cdn-icons-png.flaticon.com/512/2772/2772128.png" },
     { name: "OOP", category: "fundamentals", icon: "https://cdn-icons-png.flaticon.com/512/6132/6132222.png" },
     { name: "Operating Systems", category: "fundamentals", icon: "https://cdn-icons-png.flaticon.com/512/3767/3767086.png" },
     { name: "Computer Architecture", category: "fundamentals", icon: "https://cdn-icons-png.flaticon.com/512/1322/1322156.png" },
-    // Tools
+
     { name: "Git/GitHub", category: "tools", icon: "https://raw.githubusercontent.com/devicons/devicon/master/icons/git/git-original.svg" },
     { name: "VS Code", category: "tools", icon: "https://raw.githubusercontent.com/devicons/devicon/master/icons/vscode/vscode-original.svg" },
     { name: "Android Studio", category: "tools", icon: "https://raw.githubusercontent.com/devicons/devicon/master/icons/androidstudio/androidstudio-original.svg" },
@@ -159,10 +162,10 @@ for (let i = 0; i < 4; i++) {
     });
   });
   
-  // Initial render
+
   renderSkills();
 
-  // Projects
+
   const projectsGrid = document.querySelector('.projects-grid');
   
   const projects = [
@@ -223,7 +226,7 @@ for (let i = 0; i < 4; i++) {
       const projectCard = document.createElement('div');
       projectCard.className = 'project-card card-hover';
       
-      // Determine placeholder based on project type
+
       let placeholderClass = '';
       let placeholderIcon = '';
       let placeholderText = '';
@@ -277,7 +280,6 @@ for (let i = 0; i < 4; i++) {
   
   renderProjects();
 
-  // Contact Form
   const contactForm = document.getElementById('contact-form');
   const submitText = document.getElementById('submit-text');
   
@@ -310,7 +312,7 @@ for (let i = 0; i < 4; i++) {
     }
   });
   
-  // Toast Notification
+
   function showToast(title, message, type = 'success') {
     const toast = document.createElement('div');
     toast.className = `toast ${type}`;
