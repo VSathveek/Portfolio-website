@@ -9,13 +9,15 @@ export const site = {
   tagline: "Computer Science undergraduate, NIT Andhra Pradesh",
   email: "sathveekvaranasi@gmail.com",
   url: "https://portfolio-website-amber-pi-50.vercel.app",
-  /** Primary navigation. Routes under /research, /projects, /cv arrive in Phase 2. */
+  /** Primary navigation. */
   nav: [
     { href: "/", label: "Home" },
     { href: "/research", label: "Research" },
     { href: "/projects", label: "Projects" },
     { href: "/cv", label: "CV" },
+    { href: "/contact", label: "Contact" },
   ],
+  location: "Tadepalligudem, Andhra Pradesh, India",
   socials: [
     { label: "GitHub", href: "https://github.com/VSathveek" },
     { label: "LinkedIn", href: "https://www.linkedin.com/in/vsathveek" },
