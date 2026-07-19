@@ -7,3 +7,5 @@ package-lock.json
 index.html
 styles.css
 script.js
+# MDX blog posts — Prettier's markdown parser mangles JSX expression comments
+content/**/*.mdx
