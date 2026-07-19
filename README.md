@@ -1,16 +1,24 @@
 # Varanasi Sathveek — Personal Site
 
-A professional, academic-style personal website plus a private, password-protected
-journal with a drawing-first editor.
+A professional, academic-style personal website with a private, password-protected
+journal built around a drawing-first editor.
 
-Built with **Next.js (App Router) + TypeScript**, **Tailwind CSS**, **Supabase**
-(auth + database + storage), and **Excalidraw** for the journal editor.
-Deployed on **Vercel**.
+**Stack:** Next.js (App Router) + TypeScript · Tailwind CSS v4 · Supabase (auth +
+Postgres + storage) · Excalidraw · MDX. Deployed on **Vercel**.
 
-> This is a rebuild of the original vanilla HTML/CSS/JS site (still live on GitHub
-> Pages from `main`). The rebuild happens on the `redesign` branch and is cut over
-> to production once it reaches parity. The legacy files (`index.html`, `styles.css`,
-> `script.js`) are intentionally kept at the repo root until the Phase 7 cutover.
+Live: https://portfolio-website-amber-pi-50.vercel.app
+
+## Features
+
+- **Portfolio** — home/bio, research & experience, projects, an HTML CV with PDF
+  download, and contact. Content lives in typed data files under `src/data/`.
+- **Writing** — an MDX blog at `/blog` (posts in `content/blog/*.mdx`) with per-post
+  pages, an RSS feed at `/blog/rss.xml`, and reading-friendly typography.
+- **Private journal** — Supabase email/password auth gates `/journal`; each entry is
+  an Excalidraw canvas with debounced autosave, stored per-user with Row Level
+  Security. The editor is isolated behind `src/components/journal/journal-editor.tsx`.
+- Light/dark mode, responsive layout, SEO (sitemap, robots, OpenGraph image),
+  generated favicon, and privacy-friendly Vercel Analytics.
 
 ## Local development
 
@@ -18,12 +26,11 @@ Requirements: **Node.js 20+** and npm.
 
 ```bash
 npm install
+cp .env.example .env.local   # then fill in Supabase values
 npm run dev
 ```
 
 Open http://localhost:3000.
-
-### Scripts
 
 | Command                | What it does                      |
 | ---------------------- | --------------------------------- |
@@ -31,28 +38,37 @@ Open http://localhost:3000.
 | `npm run build`        | Production build                  |
 | `npm run start`        | Serve the production build        |
 | `npm run lint`         | ESLint                            |
-| `npm run format`       | Format the codebase with Prettier |
-| `npm run format:check` | Check formatting without writing  |
+| `npm run format`       | Format with Prettier              |
+| `npm run format:check` | Check formatting                  |
 
 ## Environment variables
 
-Copy `.env.example` to `.env.local` and fill in real values (see comments in the file).
-`.env.local` is git-ignored — **never commit secrets**. In production, set the same
-variables in the Vercel dashboard (Project Settings → Environment Variables).
+Set these in `.env.local` (git-ignored) and in the Vercel dashboard
+(Project Settings → Environment Variables):
 
-Supabase keys are added in Phase 3.
+- `NEXT_PUBLIC_SUPABASE_URL`
+- `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`
+
+The publishable key is safe to expose in the browser (access is protected by Row
+Level Security). Never put the service-role/secret key in client code.
+
+## Supabase setup
+
+1. Create a Supabase project and copy its URL + publishable key into the env vars above.
+2. In **Authentication → Users**, create your single account (auto-confirmed) and
+   **disable public sign-ups** in the auth settings.
+3. Run the migration in `supabase/migrations/` (Supabase SQL Editor) to create the
+   `journal_entries` table with its Row Level Security policies.
+
+## Content
+
+- **Portfolio** — edit the typed files in `src/data/` (profile, experience, research,
+  projects, skills) and `src/lib/site.ts` (identity, nav, socials).
+- **Blog** — add `content/blog/<slug>.mdx` with `title`, `date`, and `description`
+  frontmatter.
+- **CV PDF** — replace `public/Varanasi_Sathveek_CV.pdf`.
 
 ## Deployment (Vercel)
 
-The site deploys to Vercel's free Hobby tier.
-
-1. Import the GitHub repo at https://vercel.com/new.
-2. Framework preset: **Next.js** (auto-detected). No build overrides needed.
-3. Add the environment variables from `.env.example` (once Phase 3 adds Supabase).
-4. Every push to `redesign` gets a preview deployment; production tracks `main`
-   after the Phase 7 cutover.
-
-## Project status
-
-Rebuild is phased — see the git history for per-phase commits. Current focus:
-scaffolding and design system.
+The `main` branch auto-deploys to production on Vercel. Framework preset is Next.js
+(auto-detected); add the environment variables above and enable the Analytics tab.
