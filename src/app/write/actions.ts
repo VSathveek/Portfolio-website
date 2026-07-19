@@ -30,6 +30,41 @@ export async function createPost() {
   redirect(`/write/${data.id}`);
 }
 
+type PostPatch = {
+  title: string;
+  description: string | null;
+  slug: string;
+  content: unknown; // Block[]
+};
+
+/**
+ * Save a post's fields and block content (debounced autosave + manual save).
+ * Slugs are unique, so a collision returns a friendly error instead of throwing.
+ */
+export async function updatePost(id: string, patch: PostPatch) {
+  const { supabase } = await requireUser();
+
+  const slug = patch.slug.trim() || `untitled-${id.slice(0, 8)}`;
+  const { error } = await supabase
+    .from("posts")
+    .update({
+      title: patch.title.trim() || "Untitled",
+      description: patch.description?.trim() || null,
+      slug,
+      content: patch.content,
+    })
+    .eq("id", id);
+
+  if (error) {
+    if (error.code === "23505") return { ok: false as const, error: "That slug is already taken." };
+    return { ok: false as const, error: error.message };
+  }
+
+  revalidatePath("/write");
+  revalidatePath(`/blog/${slug}`);
+  return { ok: true as const };
+}
+
 /** Delete one of the current user's posts (RLS enforces ownership). */
 export async function deletePost(formData: FormData) {
   const id = String(formData.get("id") ?? "");
