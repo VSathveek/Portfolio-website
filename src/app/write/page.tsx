@@ -4,6 +4,7 @@ import { Container } from "@/components/container";
 import { SignOutButton } from "@/components/sign-out-button";
 import { PostRow } from "@/components/write/post-row";
 import { createPost } from "@/app/write/actions";
+import { SubmitButton } from "@/components/submit-button";
 import { createClient } from "@/utils/supabase/server";
 
 export const metadata: Metadata = {
@@ -52,12 +53,12 @@ export default async function WritePage() {
           {posts.length} {posts.length === 1 ? "post" : "posts"}
         </h2>
         <form action={createPost}>
-          <button
-            type="submit"
+          <SubmitButton
+            pendingLabel="Creating…"
             className="bg-accent text-accent-contrast hover:bg-accent-hover rounded-md px-4 py-2 text-sm font-medium transition-colors"
           >
             New post
-          </button>
+          </SubmitButton>
         </form>
       </div>
 

@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { deletePost, setPublished } from "@/app/write/actions";
+import { SubmitButton } from "@/components/submit-button";
 
 type PostRowProps = {
   id: string;
@@ -31,12 +32,12 @@ export function PostRow({ id, title, published, updatedLabel }: PostRowProps) {
       <form action={setPublished}>
         <input type="hidden" name="id" value={id} />
         <input type="hidden" name="publish" value={(!published).toString()} />
-        <button
-          type="submit"
+        <SubmitButton
+          pendingLabel="…"
           className="text-muted hover:text-fg rounded-md px-2 py-1 text-xs transition-colors"
         >
           {published ? "Unpublish" : "Publish"}
-        </button>
+        </SubmitButton>
       </form>
 
       <form
@@ -46,12 +47,12 @@ export function PostRow({ id, title, published, updatedLabel }: PostRowProps) {
         }}
       >
         <input type="hidden" name="id" value={id} />
-        <button
-          type="submit"
+        <SubmitButton
+          pendingLabel="Deleting…"
           className="text-muted rounded-md px-2 py-1 text-xs transition-colors hover:text-red-600 dark:hover:text-red-400"
         >
           Delete
-        </button>
+        </SubmitButton>
       </form>
     </li>
   );

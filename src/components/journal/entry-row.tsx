@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { renameEntry, deleteEntry } from "@/app/journal/actions";
+import { SubmitButton } from "@/components/submit-button";
 
 type EntryRowProps = {
   id: string;
@@ -30,12 +31,12 @@ export function EntryRow({ id, title, updatedLabel }: EntryRowProps) {
             aria-label="Entry title"
             className="border-border bg-surface focus-visible:border-accent flex-1 rounded-md border px-2.5 py-1.5 text-sm outline-none"
           />
-          <button
-            type="submit"
+          <SubmitButton
+            pendingLabel="Saving…"
             className="bg-accent text-accent-contrast hover:bg-accent-hover rounded-md px-2.5 py-1.5 text-xs font-medium"
           >
             Save
-          </button>
+          </SubmitButton>
           <button
             type="button"
             onClick={() => setEditing(false)}
@@ -68,12 +69,12 @@ export function EntryRow({ id, title, updatedLabel }: EntryRowProps) {
             }}
           >
             <input type="hidden" name="id" value={id} />
-            <button
-              type="submit"
+            <SubmitButton
+              pendingLabel="Deleting…"
               className="text-muted rounded-md px-2 py-1 text-xs transition-colors hover:text-red-600 dark:hover:text-red-400"
             >
               Delete
-            </button>
+            </SubmitButton>
           </form>
         </>
       )}

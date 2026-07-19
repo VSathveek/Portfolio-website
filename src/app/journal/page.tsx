@@ -4,6 +4,7 @@ import { Container } from "@/components/container";
 import { SignOutButton } from "@/components/sign-out-button";
 import { EntryRow } from "@/components/journal/entry-row";
 import { createEntry } from "@/app/journal/actions";
+import { SubmitButton } from "@/components/submit-button";
 import { createClient } from "@/utils/supabase/server";
 import type { JournalEntrySummary } from "@/types/journal";
 
@@ -52,12 +53,12 @@ export default async function JournalPage() {
           {entries.length} {entries.length === 1 ? "page" : "pages"}
         </h2>
         <form action={createEntry}>
-          <button
-            type="submit"
+          <SubmitButton
+            pendingLabel="Creating…"
             className="bg-accent text-accent-contrast hover:bg-accent-hover rounded-md px-4 py-2 text-sm font-medium transition-colors"
           >
             New entry
-          </button>
+          </SubmitButton>
         </form>
       </div>
 

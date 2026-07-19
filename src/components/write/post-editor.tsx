@@ -1,10 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState, useTransition } from "react";
 import { updatePost, setPublished } from "@/app/write/actions";
 import { TextBlock } from "@/components/write/text-block";
 import { DrawingBlock } from "@/components/write/drawing-block";
+import { Spinner } from "@/components/spinner";
 import type { Block, Post } from "@/types/post";
 
 type SaveStatus = "idle" | "dirty" | "saving" | "saved" | "error";
@@ -22,6 +23,7 @@ export function PostEditor({ post }: { post: Post }) {
   const [published, setPublishedState] = useState(post.published);
   const [status, setStatus] = useState<SaveStatus>("idle");
   const [error, setError] = useState<string | null>(null);
+  const [publishing, startPublish] = useTransition();
   const firstRender = useRef(true);
 
   const save = useCallback(async () => {
@@ -100,16 +102,26 @@ export function PostEditor({ post }: { post: Post }) {
           <button
             type="button"
             onClick={() => void save()}
-            className="border-border text-muted hover:bg-surface hover:text-fg rounded-md border px-3 py-1.5 text-sm transition-colors"
+            disabled={status === "saving"}
+            className="border-border text-muted hover:bg-surface hover:text-fg inline-flex items-center gap-1.5 rounded-md border px-3 py-1.5 text-sm transition-colors disabled:opacity-70"
           >
+            {status === "saving" && <Spinner className="size-3.5" />}
             Save
           </button>
           <button
             type="button"
-            onClick={() => void togglePublish()}
-            className="bg-accent text-accent-contrast hover:bg-accent-hover rounded-md px-3 py-1.5 text-sm font-medium transition-colors"
+            onClick={() => startPublish(() => togglePublish())}
+            disabled={publishing}
+            className="bg-accent text-accent-contrast hover:bg-accent-hover inline-flex items-center gap-1.5 rounded-md px-3 py-1.5 text-sm font-medium transition-colors disabled:opacity-70"
           >
-            {published ? "Unpublish" : "Publish"}
+            {publishing && <Spinner className="size-3.5" />}
+            {publishing
+              ? published
+                ? "Unpublishing…"
+                : "Publishing…"
+              : published
+                ? "Unpublish"
+                : "Publish"}
           </button>
         </div>
       </div>

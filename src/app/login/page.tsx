@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Container } from "@/components/container";
 import { login } from "@/app/login/actions";
+import { SubmitButton } from "@/components/submit-button";
 
 export const metadata: Metadata = {
   title: "Sign in",
@@ -58,12 +59,12 @@ export default async function LoginPage({
             </p>
           )}
 
-          <button
-            type="submit"
-            className="bg-accent text-accent-contrast hover:bg-accent-hover w-full rounded-md px-4 py-2 text-sm font-medium transition-colors"
+          <SubmitButton
+            pendingLabel="Signing in…"
+            className="bg-accent text-accent-contrast hover:bg-accent-hover w-full rounded-md px-4 py-2 text-sm font-medium transition-colors [&>span]:justify-center"
           >
             Sign in
-          </button>
+          </SubmitButton>
         </form>
       </div>
     </Container>
