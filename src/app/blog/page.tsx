@@ -2,15 +2,18 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Container } from "@/components/container";
 import { PageHeader } from "@/components/page-header";
-import { getAllPosts, formatPostDate } from "@/lib/blog";
+import { getPublishedPosts, formatPostDate } from "@/lib/posts";
 
 export const metadata: Metadata = {
   title: "Writing",
   description: "Notes and write-ups on machine learning, interpretability, and engineering.",
 };
 
-export default function BlogIndexPage() {
-  const posts = getAllPosts();
+// Reads from the database — render per request (drafts never appear here).
+export const dynamic = "force-dynamic";
+
+export default async function BlogIndexPage() {
+  const posts = await getPublishedPosts();
 
   return (
     <>

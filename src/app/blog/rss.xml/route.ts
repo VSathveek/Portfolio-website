@@ -1,10 +1,9 @@
-import { getAllPosts } from "@/lib/blog";
+import { getPublishedPosts } from "@/lib/posts";
 import { site } from "@/lib/site";
 
-// Generate the feed at build time — no runtime filesystem access needed.
-export const dynamic = "force-static";
+// Reads published posts from the database on request.
+export const dynamic = "force-dynamic";
 
-/** Escape the five XML predefined entities for safe inclusion in the feed. */
 function escapeXml(value: string): string {
   return value
     .replace(/&/g, "&amp;")
@@ -15,7 +14,7 @@ function escapeXml(value: string): string {
 }
 
 export async function GET() {
-  const posts = getAllPosts();
+  const posts = await getPublishedPosts();
   const base = site.url.replace(/\/$/, "");
 
   const items = posts
@@ -47,7 +46,7 @@ ${items}
   return new Response(xml, {
     headers: {
       "Content-Type": "application/rss+xml; charset=utf-8",
-      "Cache-Control": "public, max-age=3600",
+      "Cache-Control": "public, max-age=300",
     },
   });
 }

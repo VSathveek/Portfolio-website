@@ -1,9 +1,9 @@
 import type { MetadataRoute } from "next";
 import { site } from "@/lib/site";
-import { getAllPosts } from "@/lib/blog";
+import { getPublishedPosts } from "@/lib/posts";
 
-/** Public URLs only — the private journal and login are intentionally excluded. */
-export default function sitemap(): MetadataRoute.Sitemap {
+/** Public URLs only — the private journal, studio, and login are excluded. */
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const base = site.url.replace(/\/$/, "");
   const routes = ["", "/research", "/projects", "/blog", "/cv", "/contact"];
 
@@ -13,7 +13,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: path === "" ? 1 : 0.7,
   }));
 
-  const posts: MetadataRoute.Sitemap = getAllPosts().map((post) => ({
+  const posts: MetadataRoute.Sitemap = (await getPublishedPosts()).map((post) => ({
     url: `${base}/blog/${post.slug}`,
     lastModified: post.date || undefined,
     changeFrequency: "yearly",

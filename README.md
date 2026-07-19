@@ -32,14 +32,14 @@ npm run dev
 
 Open http://localhost:3000.
 
-| Command                | What it does                      |
-| ---------------------- | --------------------------------- |
-| `npm run dev`          | Start the dev server              |
-| `npm run build`        | Production build                  |
-| `npm run start`        | Serve the production build        |
-| `npm run lint`         | ESLint                            |
-| `npm run format`       | Format with Prettier              |
-| `npm run format:check` | Check formatting                  |
+| Command                | What it does               |
+| ---------------------- | -------------------------- |
+| `npm run dev`          | Start the dev server       |
+| `npm run build`        | Production build           |
+| `npm run start`        | Serve the production build |
+| `npm run lint`         | ESLint                     |
+| `npm run format`       | Format with Prettier       |
+| `npm run format:check` | Check formatting           |
 
 ## Environment variables
 

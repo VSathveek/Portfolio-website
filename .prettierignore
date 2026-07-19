@@ -3,5 +3,3 @@ node_modules
 out
 build
 package-lock.json
-# MDX blog posts — Prettier's markdown parser mangles JSX expression comments
-content/**/*.mdx
