@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter, Newsreader } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { SiteHeader } from "@/components/site-header";
@@ -28,6 +29,16 @@ export const metadata: Metadata = {
     template: `%s · ${site.name}`,
   },
   description: `${site.name} — ${site.tagline}.`,
+  openGraph: {
+    type: "website",
+    siteName: site.name,
+    url: site.url,
+    title: site.name,
+    description: `${site.name} — ${site.tagline}.`,
+  },
+  twitter: {
+    card: "summary_large_image",
+  },
 };
 
 export default function RootLayout({
@@ -63,6 +74,7 @@ export default function RootLayout({
             <SiteFooter />
           </FooterGate>
         </ThemeProvider>
+        <Analytics />
       </body>
     </html>
   );
