@@ -15,10 +15,6 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
-    // Legacy vanilla site — kept until the Phase 7 cutover, not linted.
-    "index.html",
-    "styles.css",
-    "script.js",
   ]),
 ]);
 

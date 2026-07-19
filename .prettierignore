@@ -3,9 +3,5 @@ node_modules
 out
 build
 package-lock.json
-# Legacy static site (kept until Phase 7 cutover — not formatted)
-index.html
-styles.css
-script.js
 # MDX blog posts — Prettier's markdown parser mangles JSX expression comments
 content/**/*.mdx
