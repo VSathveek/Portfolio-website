@@ -17,6 +17,9 @@ export function SiteFooter() {
           <Link href="/journal" className="hover:text-accent transition-colors">
             Journal
           </Link>
+          <Link href="/write" className="hover:text-accent transition-colors">
+            Studio
+          </Link>
         </p>
         <ul className="flex flex-wrap gap-x-5 gap-y-2">
           {site.socials.map((s) => (

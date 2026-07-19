@@ -40,8 +40,11 @@ export async function updateSession(request: NextRequest) {
 
   const { pathname } = request.nextUrl;
 
-  // Unauthenticated → bounce away from the journal, remembering the target.
-  if (!user && pathname.startsWith("/journal")) {
+  // Private areas: the drawing journal and the writing studio.
+  const isPrivate = pathname.startsWith("/journal") || pathname.startsWith("/write");
+
+  // Unauthenticated → bounce to login, remembering the target.
+  if (!user && isPrivate) {
     const redirectUrl = request.nextUrl.clone();
     redirectUrl.pathname = "/login";
     redirectUrl.searchParams.set("redirectTo", pathname);
