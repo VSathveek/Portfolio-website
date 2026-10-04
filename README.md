@@ -1,20 +1,20 @@
-# Varanasi Sathveek — Personal Site
+# Varanasi Sathveek, Personal Site
 
-A professional, academic-style personal website with a private, password-protected
-journal built around a drawing-first editor.
+A personal site for an ML engineer working on document AI and retrieval, with a
+private, password-protected journal built around a drawing-first editor.
 
 **Stack:** Next.js (App Router) + TypeScript · Tailwind CSS v4 · Supabase (auth +
 Postgres + storage) · Excalidraw · MDX. Deployed on **Vercel**.
 
-Live: https://portfolio-website-amber-pi-50.vercel.app
+Live: https://varanasisathveek.vercel.app
 
 ## Features
 
-- **Portfolio** — home/bio, research & experience, projects, an HTML CV with PDF
+- **Portfolio**: home/bio, research & experience, projects, an HTML CV with PDF
   download, and contact. Content lives in typed data files under `src/data/`.
-- **Writing** — an MDX blog at `/blog` (posts in `content/blog/*.mdx`) with per-post
+- **Writing**: an MDX blog at `/blog` (posts in `content/blog/*.mdx`) with per-post
   pages, an RSS feed at `/blog/rss.xml`, and reading-friendly typography.
-- **Private journal** — Supabase email/password auth gates `/journal`; each entry is
+- **Private journal**: Supabase email/password auth gates `/journal`; each entry is
   an Excalidraw canvas with debounced autosave, stored per-user with Row Level
   Security. The editor is isolated behind `src/components/journal/journal-editor.tsx`.
 - Light/dark mode, responsive layout, SEO (sitemap, robots, OpenGraph image),
@@ -62,11 +62,11 @@ Level Security). Never put the service-role/secret key in client code.
 
 ## Content
 
-- **Portfolio** — edit the typed files in `src/data/` (profile, experience, research,
+- **Portfolio**: edit the typed files in `src/data/` (profile, experience, research,
   projects, skills) and `src/lib/site.ts` (identity, nav, socials).
-- **Blog** — add `content/blog/<slug>.mdx` with `title`, `date`, and `description`
+- **Blog**: add `content/blog/<slug>.mdx` with `title`, `date`, and `description`
   frontmatter.
-- **CV PDF** — replace `public/Varanasi_Sathveek_CV.pdf`.
+- **CV PDF**: replace `public/Varanasi_Sathveek_CV.pdf`.
 
 ## Deployment (Vercel)
 

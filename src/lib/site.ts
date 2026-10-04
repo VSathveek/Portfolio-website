@@ -1,14 +1,23 @@
 /**
- * Central site configuration — identity, navigation, and social links.
- * Kept in one place so pages and the layout stay in sync. Real content
- * comes from the owner's resume (see Phase 2 pages).
+ * Central site configuration: identity, navigation and social links.
+ * Kept in one place so pages and the layout stay in sync.
  */
 export const site = {
   name: "Varanasi Sathveek",
   shortName: "Sathveek",
-  tagline: "Computer Science undergraduate, NIT Andhra Pradesh",
+  /** Leads with the work, not the enrolment status. See /cv for the rest. */
+  tagline: "ML engineer, document AI and retrieval systems",
   email: "sathveekvaranasi@gmail.com",
-  url: "https://portfolio-website-amber-pi-50.vercel.app",
+  url: "https://varanasisathveek.vercel.app",
+  /**
+   * Shown as the hero status pill. Set `open: false` when booked and the
+   * pill disappears everywhere at once.
+   */
+  availability: {
+    open: true,
+    label: "Available for contract work",
+    detail: "Remote, worldwide · IST (UTC+5:30), with overlap into US and EU hours",
+  },
   /** Primary navigation. */
   nav: [
     { href: "/", label: "Home" },
