@@ -8,7 +8,7 @@ import { SiteFooter } from "@/components/site-footer";
 import { FooterGate } from "@/components/footer-gate";
 import { site } from "@/lib/site";
 
-// Clean sans for body, refined serif for headings — a scholarly pairing.
+// Clean sans for body, refined serif for headings, a scholarly pairing.
 const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
@@ -28,13 +28,13 @@ export const metadata: Metadata = {
     default: site.name,
     template: `%s · ${site.name}`,
   },
-  description: `${site.name} — ${site.tagline}.`,
+  description: `${site.name}. ${site.tagline}.`,
   openGraph: {
     type: "website",
     siteName: site.name,
     url: site.url,
     title: site.name,
-    description: `${site.name} — ${site.tagline}.`,
+    description: `${site.name}. ${site.tagline}.`,
   },
   twitter: {
     card: "summary_large_image",
@@ -52,6 +52,20 @@ export default function RootLayout({
       suppressHydrationWarning
       className={`${inter.variable} ${newsreader.variable} h-full antialiased`}
     >
+      <head>
+        {/*
+          Marks the document as JS-capable before first paint. The scroll-reveal
+          styles hide their targets only under `.js`, so if this never runs
+          (scripts blocked, hydration failed) the page still renders fully
+          visible instead of blank. Inline and synchronous on purpose: deferring
+          it would cause a flash of already-visible content.
+        */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `document.documentElement.classList.add('js')`,
+          }}
+        />
+      </head>
       <body className="flex min-h-full flex-col">
         <ThemeProvider
           attribute="class"

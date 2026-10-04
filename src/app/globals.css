@@ -21,6 +21,14 @@
   --accent: #2d5f8b; /* links, highlights (AA on --bg/--surface) */
   --accent-hover: #234d72;
   --accent-contrast: #ffffff; /* text on an accent fill */
+
+  /* Secondary hues used only for ambient gradient work, never for text. */
+  --glow-a: #2d5f8b;
+  --glow-b: #7b5ea7;
+  --glow-c: #2f8f7f;
+  --glow-strength: 0.1;
+  --grain-opacity: 0.025;
+  --positive: #1f7a4d; /* "available for work" indicator */
 }
 
 .dark {
@@ -33,6 +41,13 @@
   --accent: #83abda; /* lighter so it reads on dark */
   --accent-hover: #a1c1e6;
   --accent-contrast: #0f1115;
+
+  --glow-a: #4d87c4;
+  --glow-b: #9b7ad1;
+  --glow-c: #3fae99;
+  --glow-strength: 0.22;
+  --grain-opacity: 0.04;
+  --positive: #4ade80;
 }
 
 @theme inline {
@@ -45,6 +60,7 @@
   --color-accent: var(--accent);
   --color-accent-hover: var(--accent-hover);
   --color-accent-contrast: var(--accent-contrast);
+  --color-positive: var(--positive);
 
   /* Font families are provided by next/font as CSS variables (see layout). */
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
@@ -57,6 +73,7 @@
 @layer base {
   html {
     color-scheme: light dark;
+    scroll-behavior: smooth;
   }
 
   body {
@@ -86,5 +103,324 @@
 
   ::selection {
     background: color-mix(in oklab, var(--accent) 22%, transparent);
+  }
+}
+
+/* ================================================================== */
+/*  Motion system                                                      */
+/*                                                                     */
+/*  Dependency-free: CSS keyframes driven either by scroll (an         */
+/*  IntersectionObserver sets [data-visible]) or by hover. Every       */
+/*  animation is switched off under prefers-reduced-motion at the      */
+/*  bottom of this file, so the site stays fully usable without it.    */
+/* ================================================================== */
+
+/* -- Scroll reveal -------------------------------------------------- */
+/*  <Reveal> renders [data-reveal]; the observer flips [data-visible].
+    Elements only start hidden when JS is running (`.js` on <html>), so
+    content is never stranded invisible if the script fails to load.   */
+.js [data-reveal] {
+  opacity: 0;
+  transform: translate3d(0, var(--reveal-y, 14px), 0) scale(var(--reveal-scale, 1));
+  filter: blur(var(--reveal-blur, 0));
+  transition:
+    opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+    filter 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: var(--reveal-delay, 0ms);
+  will-change: opacity, transform;
+}
+
+.js [data-reveal][data-visible="true"] {
+  opacity: 1;
+  transform: none;
+  filter: none;
+}
+
+/* -- Staggered line reveal for display headings --------------------- */
+.reveal-line {
+  display: inline-block;
+  opacity: 0;
+  transform: translate3d(0, 0.5em, 0);
+  animation: line-rise 0.9s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation-delay: var(--line-delay, 0ms);
+}
+
+@keyframes line-rise {
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* -- Ambient aurora blobs behind the hero --------------------------- */
+.aurora-blob {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(72px);
+  opacity: var(--glow-strength);
+  will-change: transform;
+  animation: drift var(--drift-duration, 26s) ease-in-out infinite alternate;
+  animation-delay: var(--drift-delay, 0s);
+}
+
+@keyframes drift {
+  from {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  to {
+    transform: translate3d(var(--drift-x, 40px), var(--drift-y, -30px), 0)
+      scale(var(--drift-scale, 1.15));
+  }
+}
+
+/* -- Film grain, for depth over the flat gradients ------------------ */
+.grain::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: var(--grain-opacity);
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* -- Dot grid with a soft radial fade ------------------------------- */
+.dot-grid {
+  background-image: radial-gradient(
+    circle at 1px 1px,
+    color-mix(in oklab, var(--fg) 14%, transparent) 1px,
+    transparent 0
+  );
+  background-size: 26px 26px;
+  mask-image: radial-gradient(ellipse 70% 60% at 50% 0%, #000 20%, transparent 75%);
+}
+
+/* -- Cursor spotlight on cards -------------------------------------- */
+/*  The card's pointer handler writes --mx/--my; this ::before layer is
+    a radial wash that follows the cursor and fades in on hover.       */
+.spotlight {
+  position: relative;
+  isolation: isolate;
+}
+
+.spotlight::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  background: radial-gradient(
+    240px circle at var(--mx, 50%) var(--my, 50%),
+    color-mix(in oklab, var(--accent) 14%, transparent),
+    transparent 70%
+  );
+}
+
+.spotlight:hover::before,
+.spotlight:focus-within::before {
+  opacity: 1;
+}
+
+/* -- Animated link underline ---------------------------------------- */
+.link-underline {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-size: 0% 1px;
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  transition: background-size 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.link-underline:hover,
+.link-underline:focus-visible {
+  background-size: 100% 1px;
+}
+
+/* -- "Available" pulse ---------------------------------------------- */
+.pulse-dot::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  background: var(--positive);
+  animation: ping 2.4s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+@keyframes ping {
+  0% {
+    transform: scale(1);
+    opacity: 0.55;
+  }
+  70%,
+  100% {
+    transform: scale(2.6);
+    opacity: 0;
+  }
+}
+
+/* -- Marquee -------------------------------------------------------- */
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee var(--marquee-duration, 36s) linear infinite;
+}
+
+.marquee:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+@keyframes marquee {
+  to {
+    /* The track renders its children twice; -50% loops seamlessly. */
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+/* -- Scroll progress bar -------------------------------------------- */
+.scroll-progress {
+  transform-origin: 0 50%;
+  transform: scaleX(var(--progress, 0));
+  transition: transform 0.08s linear;
+}
+
+/* -- Gradient sheen, used once, on the hero name -------------------- */
+.text-gradient {
+  background: linear-gradient(
+    110deg,
+    var(--fg) 20%,
+    color-mix(in oklab, var(--accent) 70%, var(--fg)) 50%,
+    var(--fg) 80%
+  );
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: sheen 9s ease-in-out infinite;
+}
+
+@keyframes sheen {
+  0%,
+  100% {
+    background-position: 140% 0;
+  }
+  50% {
+    background-position: -40% 0;
+  }
+}
+
+/* -- Card lift ------------------------------------------------------ */
+.lift {
+  transition:
+    transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.35s ease,
+    box-shadow 0.35s ease;
+}
+
+.lift:hover {
+  transform: translateY(-3px);
+  border-color: color-mix(in oklab, var(--accent) 40%, var(--border));
+  box-shadow: 0 10px 30px -12px color-mix(in oklab, var(--fg) 22%, transparent);
+}
+
+/* ------------------------------------------------------------------ */
+/*  Print                                                              */
+/*                                                                     */
+/*  Mainly for /cv, so "Save as PDF" from the browser produces a clean */
+/*  document: ink on white, no ambient colour, no chrome, and no       */
+/*  heading left stranded at the foot of a page.                       */
+/* ------------------------------------------------------------------ */
+@media print {
+  :root,
+  .dark {
+    --bg: #ffffff;
+    --surface: #ffffff;
+    --fg: #000000;
+    --muted: #2b2b2b;
+    --faint: #5a5a5a;
+    --border: #cccccc;
+    --accent: #000000;
+    --glow-strength: 0;
+    --grain-opacity: 0;
+  }
+
+  header,
+  footer,
+  .aurora-blob,
+  .dot-grid,
+  .grain::after {
+    display: none !important;
+  }
+
+  .js [data-reveal],
+  .reveal-line {
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+    animation: none !important;
+  }
+
+  .spotlight::before,
+  .lift {
+    display: none;
+    box-shadow: none;
+  }
+
+  h2,
+  h3 {
+    break-after: avoid;
+  }
+
+  li,
+  dl > div {
+    break-inside: avoid;
+  }
+
+  /* Spell out destinations that a printed page would otherwise lose. */
+  a[href^="http"]::after {
+    content: " (" attr(href) ")";
+    font-size: 0.75em;
+    color: #5a5a5a;
+    word-break: break-all;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/*  Reduced motion: keep every state, drop every movement.             */
+/* ------------------------------------------------------------------ */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .js [data-reveal],
+  .js [data-reveal][data-visible="true"] {
+    opacity: 1;
+    transform: none;
+    filter: none;
+    transition: none;
+  }
+
+  .reveal-line {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
+
+  .aurora-blob,
+  .marquee-track,
+  .pulse-dot::before {
+    animation: none;
+  }
+
+  .text-gradient {
+    background: none;
+    color: var(--fg);
+    animation: none;
+  }
+
+  .lift:hover {
+    transform: none;
   }
 }

@@ -6,6 +6,7 @@ import { useState } from "react";
 import { site } from "@/lib/site";
 import { cn } from "@/lib/cn";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { ScrollProgress } from "@/components/motion/scroll-progress";
 
 /** Is `href` the current page? (Exact match for "/", prefix match otherwise.) */
 function useIsActive() {
@@ -32,11 +33,20 @@ export function SiteHeader() {
               href={item.href}
               aria-current={isActive(item.href) ? "page" : undefined}
               className={cn(
-                "rounded-md px-3 py-2 text-sm transition-colors",
-                isActive(item.href) ? "text-fg" : "text-muted hover:bg-surface hover:text-fg"
+                "group relative rounded-md px-3 py-2 text-sm transition-colors",
+                isActive(item.href) ? "text-fg" : "text-muted hover:text-fg"
               )}
             >
               {item.label}
+              {/* Accent rule that slides open on hover and stays open on the
+                  current page, a quieter active state than a filled chip. */}
+              <span
+                aria-hidden="true"
+                className={cn(
+                  "bg-accent absolute inset-x-3 -bottom-px h-px origin-left transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]",
+                  isActive(item.href) ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"
+                )}
+              />
             </Link>
           ))}
           <span className="bg-border mx-1 h-5 w-px" aria-hidden="true" />
@@ -96,6 +106,9 @@ export function SiteHeader() {
           </ul>
         </nav>
       )}
+
+      {/* Reading progress, sitting on the header's own bottom border. */}
+      <ScrollProgress />
     </header>
   );
 }
