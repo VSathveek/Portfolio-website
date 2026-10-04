@@ -1,4 +1,4 @@
-/** Pure-CSS spinner (no client JS needed) — usable in server or client components. */
+/** Pure-CSS spinner (no client JS needed), usable in server or client components. */
 export function Spinner({ className = "size-4" }: { className?: string }) {
   return (
     <svg

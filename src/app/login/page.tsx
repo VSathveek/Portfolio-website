@@ -20,7 +20,7 @@ export default async function LoginPage({
     <Container size="prose" className="py-20 sm:py-28">
       <div className="mx-auto max-w-sm">
         <h1 className="text-2xl">Sign in</h1>
-        <p className="text-muted mt-2 text-sm">Private area — journal access.</p>
+        <p className="text-muted mt-2 text-sm">Private area. Journal access.</p>
 
         <form action={login} className="mt-8 space-y-4" noValidate>
           <input type="hidden" name="redirectTo" value={redirectTo ?? "/journal"} />

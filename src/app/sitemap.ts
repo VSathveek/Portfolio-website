@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 import { site } from "@/lib/site";
 import { getPublishedPosts } from "@/lib/posts";
 
-/** Public URLs only — the private journal, studio, and login are excluded. */
+/** Public URLs only, the private journal, studio, and login are excluded. */
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const base = site.url.replace(/\/$/, "");
   const routes = ["", "/research", "/projects", "/blog", "/cv", "/contact"];

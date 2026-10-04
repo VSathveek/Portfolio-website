@@ -4,7 +4,7 @@ import type { Post, PostSummary } from "@/types/post";
 
 /**
  * Public post queries. These run under the visitor's session (or anon), so RLS
- * returns only published posts to the public — drafts stay invisible.
+ * returns only published posts to the public, drafts stay invisible.
  */
 
 export async function getPublishedPosts(): Promise<PostSummary[]> {

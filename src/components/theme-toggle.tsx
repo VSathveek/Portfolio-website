@@ -5,7 +5,7 @@ import { useTheme } from "next-themes";
 /**
  * Light/dark toggle. Both icons are always rendered and the correct one is
  * shown via the `dark:` variant (next-themes sets `.dark` on <html> before
- * paint, so there's no flash and no hydration mismatch — we never read theme
+ * paint, so there's no flash and no hydration mismatch, we never read theme
  * state during render). `resolvedTheme` is only read inside the click handler,
  * which runs client-side.
  */
@@ -19,7 +19,7 @@ export function ThemeToggle() {
       aria-label="Toggle light or dark theme"
       className="border-border text-muted hover:bg-surface hover:text-fg inline-flex size-9 items-center justify-center rounded-md border transition-colors"
     >
-      {/* Moon — shown in light mode */}
+      {/* Moon: shown in light mode */}
       <svg
         width="18"
         height="18"
@@ -34,7 +34,7 @@ export function ThemeToggle() {
       >
         <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z" />
       </svg>
-      {/* Sun — shown in dark mode */}
+      {/* Sun: shown in dark mode */}
       <svg
         width="18"
         height="18"

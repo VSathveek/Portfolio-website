@@ -5,13 +5,13 @@ import { tryGetSupabaseConfig } from "@/utils/supabase/config";
 /**
  * Refreshes the Supabase session on every matched request and gates the
  * private journal. Uses getUser() (which revalidates the token with Supabase
- * Auth) rather than trusting the cookie session — this is the server-side
+ * Auth) rather than trusting the cookie session, this is the server-side
  * check that actually protects /journal.
  */
 export async function updateSession(request: NextRequest) {
   let supabaseResponse = NextResponse.next({ request });
 
-  // If Supabase isn't configured yet, don't break the public site — just skip
+  // If Supabase isn't configured yet, don't break the public site, just skip
   // session refresh and route gating for this request.
   const config = tryGetSupabaseConfig();
   if (!config) return supabaseResponse;
@@ -32,7 +32,7 @@ export async function updateSession(request: NextRequest) {
     },
   });
 
-  // Do not run code between createServerClient and getUser() — it must be the
+  // Do not run code between createServerClient and getUser(), it must be the
   // first await so the session is refreshed before any redirect decision.
   const {
     data: { user },

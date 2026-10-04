@@ -5,7 +5,7 @@ import dynamic from "next/dynamic";
 /**
  * Isolation boundary for the drawing editor. Excalidraw is client-only (no SSR)
  * and touches `window` at import time, so it's loaded with ssr:false and only
- * rendered after mount. To swap in tldraw later, change the import below — the
+ * rendered after mount. To swap in tldraw later, change the import below, the
  * rest of the app depends only on this component's props.
  */
 const ExcalidrawCanvas = dynamic(() => import("@/components/journal/excalidraw-canvas"), {

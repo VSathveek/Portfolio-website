@@ -1,6 +1,6 @@
 /**
  * Reads the public Supabase config from the environment. These are the URL and
- * the publishable key — both safe to ship to the browser (access is gated by
+ * the publishable key, both safe to ship to the browser (access is gated by
  * Row Level Security). Throws a clear error if they're missing so a
  * misconfigured deploy fails loudly instead of silently.
  */

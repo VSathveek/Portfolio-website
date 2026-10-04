@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
-// Always render fresh — the entry list changes as pages are added/edited.
+// Always render fresh, the entry list changes as pages are added/edited.
 export const dynamic = "force-dynamic";
 
 const dateFmt = new Intl.DateTimeFormat("en-GB", {

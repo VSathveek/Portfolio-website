@@ -51,7 +51,7 @@ export async function renameEntry(formData: FormData) {
 /**
  * Persist an entry's Excalidraw scene (jsonb). Called by the editor's
  * debounced autosave and manual save. RLS ensures only the owner can write.
- * No revalidate here — autosave runs often and the list is force-dynamic.
+ * No revalidate here, autosave runs often and the list is force-dynamic.
  */
 export async function updateScene(id: string, scene: unknown) {
   if (!id) return { ok: false as const };

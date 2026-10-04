@@ -72,7 +72,7 @@ export default function ExcalidrawCanvas({
   initialScene: unknown;
 }) {
   const { resolvedTheme } = useTheme();
-  // initialData is read once by Excalidraw on mount — compute it a single time.
+  // initialData is read once by Excalidraw on mount, compute it a single time.
   const [initialData] = useState<ExcalidrawInitialData>(() => buildInitialData(initialScene));
 
   const [status, setStatus] = useState<SaveStatus>("idle");
@@ -170,7 +170,7 @@ export default function ExcalidrawCanvas({
         </div>
       </div>
 
-      {/* Canvas — Excalidraw needs a parent with an explicit, non-zero height. */}
+      {/* Canvas: Excalidraw needs a parent with an explicit, non-zero height. */}
       <div className="min-h-0 flex-1">
         <Excalidraw
           initialData={initialData}
@@ -189,7 +189,7 @@ function SaveIndicator({ status }: { status: SaveStatus }) {
     dirty: { label: "Unsaved changes…", className: "text-faint" },
     saving: { label: "Saving…", className: "text-muted" },
     saved: { label: "Saved", className: "text-muted" },
-    error: { label: "Save failed — retry", className: "text-red-600 dark:text-red-400" },
+    error: { label: "Save failed, retry", className: "text-red-600 dark:text-red-400" },
   };
   const { label, className } = map[status];
   return (

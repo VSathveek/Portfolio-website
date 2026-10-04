@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   description: "Notes and write-ups on machine learning, interpretability, and engineering.",
 };
 
-// Reads from the database — render per request (drafts never appear here).
+// Reads from the database, render per request (drafts never appear here).
 export const dynamic = "force-dynamic";
 
 export default async function BlogIndexPage() {
@@ -19,7 +19,7 @@ export default async function BlogIndexPage() {
     <>
       <PageHeader
         title="Writing"
-        lead="Occasional notes on the things I work on — interpretability, retrieval, and engineering."
+        lead="Occasional notes on the things I work on: interpretability, retrieval and engineering."
       />
 
       <Container size="prose" className="py-8">
